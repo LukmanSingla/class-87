@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Button } from "react-native";
 import * as Google from "expo-google-app-auth";
-
+import firebase from "firebase";
 export default class LoginScreen extends Component {
   isUserEqual = (googleUser, firebaseUser) => {
     if (firebaseUser) {
@@ -69,12 +69,13 @@ export default class LoginScreen extends Component {
   signInWithGoogleAsync = async () => {
     try {
       const result = await Google.logInAsync({
+        behavior: "web",
         androidClientId:
           "60233974737 - ta4q40k9e8670go9p3b8217jvb5t6hun.apps.googleusercontent.com",
-        iosClientId:
-          "60233974737 - glgp3mm7ddgosu5fvargvlk18l9p21o9.apps.googleusercontent.com",
+
         scopes: ["profile", "email"],
       });
+      alert("result");
 
       if (result.type == "success") {
         console.log("test");
@@ -90,13 +91,14 @@ export default class LoginScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
+        <Button
           onPress={() => {
             this.signInWithGoogleAsync();
           }}
+          title={"Sign In with Google"}
         >
-          <Text>Login with Google</Text>
-        </TouchableOpacity>
+          {/* <Text>Login with Google</Text> */}
+        </Button>
       </View>
     );
   }
